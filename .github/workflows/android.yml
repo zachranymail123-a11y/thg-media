@@ -1,0 +1,46 @@
+# Sestaví Android aplikaci Nejlevnější hry (Trusted Web Activity) – nepodepsaný .aab.
+# Podepisuje se mimo GitHub (podpisový klíč v repu není). Výsledek se uloží do větve android-build.
+name: Android – Nejlevnější hry
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['android/nejlevnejsihry/twa-manifest.json', '.github/workflows/android.yml']
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '17' }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Bubblewrap
+        run: |
+          npm i -g @bubblewrap/cli@1
+          mkdir -p ~/.bubblewrap
+          echo "{\"jdkPath\":\"$JAVA_HOME\",\"androidSdkPath\":\"$ANDROID_HOME\"}" > ~/.bubblewrap/config.json
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+      - name: Vygenerovat projekt a sestavit
+        working-directory: android/nejlevnejsihry
+        run: |
+          mkdir -p /tmp/twa && cp twa-manifest.json /tmp/twa/
+          cd /tmp/twa
+          bubblewrap update --skipVersionUpgrade --manifest=./twa-manifest.json
+          chmod +x gradlew
+          ./gradlew bundleRelease --no-daemon -q
+          ls -la app/build/outputs/bundle/release/
+      - name: Uložit do větve android-build
+        run: |
+          git config user.name "github-actions"; git config user.email "actions@github.com"
+          git fetch origin android-build || true
+          git switch --orphan android-build-new
+          git rm -rf --quiet . || true
+          cp /tmp/twa/app/build/outputs/bundle/release/app-release.aab nejlevnejsihry-unsigned.aab
+          printf '%s\n' "$GITHUB_SHA" > SOURCE
+          git add nejlevnejsihry-unsigned.aab SOURCE
+          git commit -qm "Android build $GITHUB_SHA"
+          git push -f origin HEAD:android-build
