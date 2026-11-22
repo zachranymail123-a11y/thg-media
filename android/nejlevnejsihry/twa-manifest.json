@@ -49,7 +49,9 @@
   "minSdkVersion": 24,
   "orientation": "default",
   "fingerprints": [],
-  "additionalTrustedOrigins": [],
+  "additionalTrustedOrigins": [
+    "gamekeysdeals.com"
+  ],
   "retainedBundles": [],
   "appVersion": "1.0.0"
 }
