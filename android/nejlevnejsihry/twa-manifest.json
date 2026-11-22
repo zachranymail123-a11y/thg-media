@@ -16,18 +16,32 @@
   "iconUrl": "https://raw.githubusercontent.com/zachranymail123-a11y/thg-media/main/android/icon-512.png",
   "maskableIconUrl": "https://raw.githubusercontent.com/zachranymail123-a11y/thg-media/main/android/maskable-512.png",
   "splashScreenFadeOutDuration": 300,
-  "signingKey": { "path": "./upload.jks", "alias": "upload" },
+  "signingKey": {
+    "path": "./upload.jks",
+    "alias": "upload"
+  },
   "appVersionName": "1.0.0",
   "appVersionCode": 1,
   "shortcuts": [
-    { "name": "Hry zdarma", "shortName": "Hry zdarma", "url": "/hry-zdarma/?utm_source=android&utm_medium=shortcut", "chosenIconUrl": "https://raw.githubusercontent.com/zachranymail123-a11y/thg-media/main/android/icon-192.png" },
-    { "name": "Slevy týdne", "shortName": "Slevy", "url": "/slevy-tydne/?utm_source=android&utm_medium=shortcut", "chosenIconUrl": "https://raw.githubusercontent.com/zachranymail123-a11y/thg-media/main/android/icon-192.png" }
+    {
+      "name": "Hry zdarma",
+      "shortName": "Hry zdarma",
+      "url": "/hry-zdarma/?utm_source=android&utm_medium=shortcut",
+      "chosenIconUrl": "https://raw.githubusercontent.com/zachranymail123-a11y/thg-media/main/android/icon-192.png"
+    },
+    {
+      "name": "Slevy týdne",
+      "shortName": "Slevy",
+      "url": "/slevy-tydne/?utm_source=android&utm_medium=shortcut",
+      "chosenIconUrl": "https://raw.githubusercontent.com/zachranymail123-a11y/thg-media/main/android/icon-192.png"
+    }
   ],
   "generatorApp": "bubblewrap-cli",
-  "webManifestUrl": "https://nejlevnejsihry.link/manifest.webmanifest",
   "fallbackType": "customtabs",
   "features": {},
-  "alphaDependencies": { "enabled": false },
+  "alphaDependencies": {
+    "enabled": false
+  },
   "enableSiteSettingsShortcut": true,
   "isChromeOSOnly": false,
   "isMetaQuest": false,
